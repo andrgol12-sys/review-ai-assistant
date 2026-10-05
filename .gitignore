@@ -21,3 +21,9 @@ Thumbs.db
 
 # Test/cache files
 .pytest_cache/
+
+# A/B test generated results
+ab_results.csv
+blind_evaluation.csv
+blind_key.csv
+PEd04_AB_Test_Review_AI_Assistant - Blind Evaluation.csv
