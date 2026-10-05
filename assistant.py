@@ -4,7 +4,7 @@ from openai import OpenAI
 
 from config import OPENAI_API_KEY, OPENAI_MODEL
 from knowledge_base import KnowledgeBase
-from prompts import SYSTEM_PROMPT
+from prompts import build_system_prompt
 
 
 class ReviewAssistant:
@@ -12,6 +12,12 @@ class ReviewAssistant:
         self.client = OpenAI(api_key=OPENAI_API_KEY)
         self.model = OPENAI_MODEL
         self.knowledge_base = KnowledgeBase()
+
+        self.system_prompt = build_system_prompt(
+            company_name="HomeTech",
+            company_description="Интернет-магазин бытовой техники и электроники.",
+            response_language="русский",
+        )
 
     def analyze_review(self, review: str) -> str:
         relevant_context = self.knowledge_base.search(review)
@@ -34,7 +40,7 @@ class ReviewAssistant:
 
         response = self.client.responses.create(
             model=self.model,
-            instructions=SYSTEM_PROMPT,
+            instructions=self.system_prompt,
             input=user_prompt,
             temperature=0.2,
         )
